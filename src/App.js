@@ -10,13 +10,8 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-        tags: [
-          
-        ],
-        methods: [{
-
-          }]
-      
+        day: [],
+        headliners: []    
     }
   }
   
@@ -42,8 +37,11 @@ class App extends Component {
   componentDidMount() {
     fetch('http://localhost:3005')
       .then(data => data.json())
-        .then(JSONdata => {
-          this.setState({methods: JSONdata.data})
+        // .then(response => console.log(response.data.day))
+        .then(res => {
+          this.setState({
+            day: res.data.day,
+            headliners: res.data.headliners})
         })
   }
 
@@ -60,7 +58,12 @@ class App extends Component {
             <h1 className="pb-2"> WoodStock Bangers</h1>
             <div className="flashcard">
               <p className="pb-2">An app to learn which bands headlined the original WoodStock Festival 1969.</p>
-              <button className="btn btn-danger btn-lg" onClick={this.generateFlashcard}>Generate</button>
+                  <div className="form-group">
+                  <label htmlFor="exampleFormControlTextarea1">Enter Friday, Saturday, Sunday or Monday for info: </label>
+                  <textarea className="form-control col-sm-3 justify-content-center" id="exampleFormControlTextarea1" rows="2"></textarea>
+                  <button className="btn btn-dark btn-sm" >Submit</button>
+                    </div>
+              <button className="btn btn-danger btn-lg" onClick={this.generateFlashcard}>Rock Me</button>
             </div>
             <div className="row justify-content-center">
               {this.state.name
@@ -71,11 +74,7 @@ class App extends Component {
                 /> 
                 : '' } 
             </div>
-            <div className="form-group">
-              <label for="exampleFormControlTextarea1">Type response here:  </label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
-              <button className="btn btn-dark btn-sm" >Submit</button>
-            </div>
+            
           </div>
         </div> 
       </div>
