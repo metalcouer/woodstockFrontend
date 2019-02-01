@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Card from './components/card';
-// import Data from './components/data';
+
 
 
 
@@ -11,7 +11,8 @@ class App extends Component {
     super(props)
     this.state = {
         day: [],
-        headliners: []    
+        headliners: [], 
+        isCard: false   
     }
   }
   
@@ -21,23 +22,23 @@ class App extends Component {
   }
 
   generateFlashcard = (e) => {
-    console.log('generateFlashcard')
-    const randomIndex = this.getRandomIntInclusive(this.state.methods.length - 1)
-    const randomCard = this.state.methods[randomIndex]
-    console.log(randomCard)
-    this.setState({
-      name: randomCard.name,
-      description: randomCard.description,
-      tags: randomCard.tags,
-      link: randomCard.link,
-      example: randomCard.example
+    const randomIndex = this.getRandomIntInclusive(this.state.headliners.length - 1)
+    const randomCard = this.state.headliners[randomIndex]
+     this.setState({
+      id: randomCard.id,
+      artist: randomCard.artist,
+      time: randomCard.time,
+      opener: randomCard.opener,
+      closer: randomCard.closer,
+      day: randomCard.day,
+      isCard: true,
     })
   }
 
   componentDidMount() {
     fetch('http://localhost:3005')
       .then(data => data.json())
-        // .then(response => console.log(response.data.day))
+        
         .then(res => {
           this.setState({
             day: res.data.day,
@@ -58,19 +59,16 @@ class App extends Component {
             <h1 className="pb-2"> WoodStock Bangers</h1>
             <div className="flashcard">
               <p className="pb-2">An app to learn which bands headlined the original WoodStock Festival 1969.</p>
-                  <div className="form-group">
-                  <label htmlFor="exampleFormControlTextarea1">Enter Friday, Saturday, Sunday or Monday for info: </label>
-                  <textarea className="form-control col-sm-3 justify-content-center" id="exampleFormControlTextarea1" rows="2"></textarea>
-                  <button className="btn btn-dark btn-sm" >Submit</button>
-                    </div>
               <button className="btn btn-danger btn-lg" onClick={this.generateFlashcard}>Rock Me</button>
             </div>
             <div className="row justify-content-center">
-              {this.state.name
+              {this.state.isCard
                 ? <Card
-                description={this.state.description}
-                tags={this.state.tags}
-                example={this.state.example}
+                artist = {this.state.artist}
+                time = {this.state.time}
+                opener = {this.state.opener}
+                closer = {this.state.closer}
+                day = {this.state.day}
                 /> 
                 : '' } 
             </div>
