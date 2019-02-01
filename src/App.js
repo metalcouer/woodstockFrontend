@@ -61,6 +61,7 @@ class App extends Component {
               <p className="pb-2">An app to learn which bands headlined the original WoodStock Festival 1969.</p>
               <button className="btn btn-danger btn-lg" onClick={this.generateFlashcard}>Rock Me</button>
             </div>
+            <br></br>
             <div className="row justify-content-center">
               {this.state.isCard
                 ? <Card
